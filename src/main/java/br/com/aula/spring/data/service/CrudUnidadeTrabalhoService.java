@@ -1,6 +1,7 @@
 package br.com.aula.spring.data.service;
 
 import br.com.aula.spring.data.orm.Cargo;
+
 import br.com.aula.spring.data.orm.UnidadeTrabalho;
 import br.com.aula.spring.data.repository.CargoRepository;
 import br.com.aula.spring.data.repository.UnidadeTrabalhoRepository;

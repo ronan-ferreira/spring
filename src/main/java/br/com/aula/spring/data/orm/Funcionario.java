@@ -1,12 +1,23 @@
 package br.com.aula.spring.data.orm;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.transaction.reactive.GenericReactiveTransaction;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import br.com.aula.spring.data.orm.Cargo;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "funcionarios")
@@ -18,13 +29,12 @@ public class Funcionario {
     private String cpf;
     private Double salario;
     private LocalDate dataContratacao;
-
     @ManyToOne
     @JoinColumn(name = "cargo_id", nullable = false)
     private Cargo cargo;
     @Fetch(FetchMode.SELECT)
-    @ManyToMany(fetch =  FetchType.EAGER)
-    @JoinTable(name = "funcionario_unidades", joinColumns = {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "funcionarios_unidades", joinColumns = {
             @JoinColumn(name = "fk_funcionario") },
             inverseJoinColumns = { @JoinColumn(name = "fk_unidade") })
     private List<UnidadeTrabalho> unidadeTrabalhos;
@@ -87,14 +97,7 @@ public class Funcionario {
 
     @Override
     public String toString() {
-        return "Funcionario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", salario=" + salario +
-                ", dataContratacao=" + dataContratacao +
-                ", cargo=" + cargo +
-                ", unidadeTrabalhos=" + unidadeTrabalhos +
-                '}';
+        return "Funcionario: " + "id:" + id + "| nome:'" + nome + "| cpf:" + cpf + "| salario:" + salario
+                + "| dataContratacao:" + dataContratacao + "| cargo:" + cargo.getDescricao();
     }
 }
